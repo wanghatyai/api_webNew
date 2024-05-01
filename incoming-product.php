@@ -1,14 +1,24 @@
 <?php
+  header("Access-Control-Allow-Origin: *");
+  header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+  header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
   require_once('../../Akitokung/00-connection.class.sqli.php');
+
+  $inputJSON = file_get_contents('php://input');
+  $input = json_decode($inputJSON, true);
   
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    header("Access-Control-Allow-Origin: * ");
-    header("Content-Type: application/json; charset=UTF-8");    // ประกาศ header สำหรับรับส่งค่า json
+    //header("Access-Control-Allow-Origin: * ");
+    //header("Content-Type: application/json; charset=UTF-8");    // ประกาศ header สำหรับรับส่งค่า json
     //header("Content-Type: text/html; charset=UTF-8");
-    header("Access-Control-Allow-Methods: POST");
-    header("Access-Control-Max-Age: 3600");
-    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+    //header("Access-Control-Allow-Methods: POST");
+    //header("Access-Control-Max-Age: 3600");
+    //header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    
+    $_GET['start'] = $input['start'];
+    $_GET['end'] = $input['end'];
+    
     // token สำหรับ decode jwt
     $token = getBearerToken();
     if (!empty($token)) {
